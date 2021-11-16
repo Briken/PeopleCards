@@ -43,7 +43,7 @@ public class CardDisplayScript : MonoBehaviour
         }
         else
         {
-            ageText.text = $"Age: {card.age}";   
+            ageText.text = $"{card.age}";   
         }
         nameText.text = card.card_name;
         descriptionText.text = card.card_description;
