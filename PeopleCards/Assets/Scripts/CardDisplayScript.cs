@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class CardDisplayScript : MonoBehaviour
 {
@@ -35,8 +37,15 @@ public class CardDisplayScript : MonoBehaviour
 
     public void DisplayNewCard(CardScript card)
     {
+        if (card.age == -1)
+        {
+            ageText.text = DefaultCardValues.NO_AGE_FOUND;
+        }
+        else
+        {
+            ageText.text = $"Age: {card.age}";   
+        }
         nameText.text = card.card_name;
-        ageText.text = $"Age: {card.age}";
         descriptionText.text = card.card_description;
         art.sprite = ConvertImageFromString(card.b64image);
     }

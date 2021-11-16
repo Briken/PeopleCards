@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class CardSwapperScript : MonoBehaviour
 {
-    private int currentCard = 0;
+    private int _currentCardID = 0;
 
-  public CardDisplayScript _displayScript;
+  public CardDisplayScript displayScript;
 
-  public CardLoaderScript _loaderScript;
+  public CardLoaderScript loaderScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,27 +24,53 @@ public class CardSwapperScript : MonoBehaviour
 
     public void DisplayNextCard()
     {
-        if (currentCard == _loaderScript.getCardList().Count - 1)
+        if (_currentCardID == loaderScript.getCardList().Count - 1)
         {
-            currentCard = 0;
+            _currentCardID = 0;
         }
         else
         {
-            currentCard++;
+            _currentCardID++;
         }
-        _displayScript.DisplayNewCard(_loaderScript.getCardList()[currentCard]);
+
+        ValiddateAndDisplayCard(_currentCardID);
     }
 
     public void DisplayPrevCard()
     {
-        if (currentCard == 0)
+        if (_currentCardID == 0)
         {
-            currentCard = _loaderScript.getCardList().Count - 1;
+            _currentCardID = loaderScript.getCardList().Count - 1;
         }
         else
         {
-            currentCard++;
+            _currentCardID--;
         }
-        _displayScript.DisplayNewCard(_loaderScript.getCardList()[currentCard]);
+        ValiddateAndDisplayCard(_currentCardID);
     }
+    private void ValiddateAndDisplayCard(int id)
+    {
+        CardScript displayCard = loaderScript.getCardList()[id];
+        displayCard = checkNulls(displayCard);
+        displayScript.DisplayNewCard(displayCard);
+    }
+    private CardScript checkNulls(CardScript validCard)
+    {
+        if (validCard.b64image == "nullImage")
+        {
+            validCard.b64image = DefaultCardValues.NO_IMG_FOUND;
+        }
+
+        if (validCard.card_name == "nullName")
+        {
+            validCard.card_name = DefaultCardValues.NO_NAME_FOUND;
+        }
+
+        if (validCard.card_description == "nullDesc")
+        {
+            validCard.card_description = DefaultCardValues.NO_DESC_FOUND;
+        }
+        return validCard;    
+    }
+
 }
