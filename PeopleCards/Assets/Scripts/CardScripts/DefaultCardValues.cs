@@ -10,4 +10,5 @@
     public static string DECK_EXTENSION= ".json";
     public static string TEST_DECK = "Json/test";
     public static string JSON_DIR = "Json";
+    public static string ALL_DECK_NAME = "allcards";
 }

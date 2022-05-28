@@ -25,12 +25,12 @@ public class SwipeControlScript : MonoBehaviour
             endTouchPos = Input.GetTouch(0).position;
         }
 
-        if (endTouchPos.x < startTouchPos.x && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (endTouchPos.x > startTouchPos.x && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             swapper.DisplayPrevCard();
             nullTouchPos();
         }
-        if (endTouchPos.x > startTouchPos.x && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (endTouchPos.x < startTouchPos.x && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             swapper.DisplayNextCard();
             nullTouchPos();

@@ -13,14 +13,20 @@ public class CardLoaderScript : MonoBehaviour
 {
     public CardDisplayScript displayScript;
     public TextAsset jsonFile;
-    public List<CardScript> cards = new List<CardScript>();
+    public Deck deck;
+    public DeckPersistenceScript deckManager;
     // Start is called before the first frame update
     void Start()
     {
-        loadCards();
+        deck = deckManager.getActiveDeck();
     }
 
-    private void loadCards()
+    public Deck getCardList()
+    {
+        return deck;
+    }
+
+    public void loadCards()
     {
         string json = "";
         string fullPathWithExt = Application.persistentDataPath + DefaultCardValues.DECK_PATH +
@@ -41,26 +47,11 @@ public class CardLoaderScript : MonoBehaviour
         foreach (CardScript card in cardsFromJson.card_array)
         {
             Debug.Log(card.card_name);
-            cards.Add(card);
+            deckManager.allCards.Add(card);
         }
-
-        displayScript.DisplayNewCard(cards[0]);
     }
-
-    public List<CardScript> getCardList()
-    {
-        return cards;
-    }
-
-    public CardArray getCardArray()
-    {
-        CardArray cardArray = new CardArray();
-        cardArray.card_array = cards.ToArray();
-        return cardArray;
-    }
-
     public void AddToCardList(CardScript card)
     {
-        cards.Add(card);
+        deck.getCardList().Add(card);
     }
 }

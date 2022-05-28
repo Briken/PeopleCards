@@ -6,13 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-public class CardDisplayScript : MonoBehaviour
+public class  CardDisplayScript : MonoBehaviour
 {
     public Image art;
     public Text ageText;
     public Text descriptionText;
     public Text nameText; 
-    
+    public CardScript currentCard;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +37,7 @@ public class CardDisplayScript : MonoBehaviour
 
     public void DisplayNewCard(CardScript card)
     {
+        currentCard = card;
         if (card.age == -1)
         {
             ageText.text = DefaultCardValues.NO_AGE_FOUND;

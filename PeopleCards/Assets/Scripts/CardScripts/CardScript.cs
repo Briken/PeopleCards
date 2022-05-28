@@ -7,4 +7,5 @@ public class CardScript
     public string card_description;
     public int age;
     public string b64image;
+    public string[] listofdecks;
 }

@@ -9,7 +9,7 @@ public class CardSwapperScript : MonoBehaviour
 
   public CardDisplayScript displayScript;
 
-  public CardLoaderScript loaderScript;
+  public DeckPersistenceScript deckManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class CardSwapperScript : MonoBehaviour
 
     public void DisplayNextCard()
     {
-        if (_currentCardID == loaderScript.getCardList().Count - 1)
+        if (_currentCardID >=  - 1)
         {
             _currentCardID = 0;
         }
@@ -40,7 +40,7 @@ public class CardSwapperScript : MonoBehaviour
     {
         if (_currentCardID == 0)
         {
-            _currentCardID = loaderScript.getCardList().Count - 1;
+            _currentCardID = deckManager.getActiveDeck().getCardList().Count - 1;
         }
         else
         {
@@ -50,7 +50,7 @@ public class CardSwapperScript : MonoBehaviour
     }
     private void ValiddateAndDisplayCard(int id)
     {
-        CardScript displayCard = loaderScript.getCardList()[id];
+        CardScript displayCard = deckManager.getActiveDeck().getCardList()[id];
         displayCard = checkNulls(displayCard);
         displayScript.DisplayNewCard(displayCard);
     }
@@ -72,5 +72,5 @@ public class CardSwapperScript : MonoBehaviour
         }
         return validCard;    
     }
-
+    
 }
