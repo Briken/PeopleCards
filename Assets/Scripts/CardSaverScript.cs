@@ -12,7 +12,7 @@ public class CardSaverScript : MonoBehaviour
 {
     private bool toggleFields = false;
     private CardScript tempCard;
-    public GameObject newCardFields; 
+    public GameObject newCardFields;
     public GameObject nextButton;
     public GameObject prevButton;
     public TextAsset jsonFile;
@@ -21,7 +21,7 @@ public class CardSaverScript : MonoBehaviour
     {
         byte[] fileData;
         string retVal = "";
-        if (File.Exists(filePath)) 
+        if (File.Exists(filePath))
         {
             fileData = File.ReadAllBytes(filePath);
             retVal = Convert.ToBase64String(fileData);
@@ -34,30 +34,31 @@ public class CardSaverScript : MonoBehaviour
         return retVal;
     }
 
-    public void UpdateCardName(InputField val)
+    public void UpdateCardName(InputField name)
     {
-        tempCard.card_name = val.text;
+        tempCard.card_name = name.text;
     }
 
-    public void UpdateCardDesc(InputField val)
+    public void UpdateCardDesc(InputField desc)
     {
-        tempCard.card_description = val.text;
+        tempCard.card_description = desc.text;
     }
 
-    public void UpdateCardAge(InputField val)
+    public void UpdateCardAge(InputField age)
     {
         try
         {
-            tempCard.age = Int32.Parse(val.text);
-        } catch (FormatException ex)
+            tempCard.age = Int32.Parse(age.text);
+        }
+        catch (FormatException ex)
         {
             tempCard.age = -1;
         }
     }
 
-    public void UpdateCardImage(InputField val)
+    public void UpdateCardImage(InputField image)
     {
-        tempCard.b64image = SaveImageAsBase64(val.text);
+        tempCard.b64image = SaveImageAsBase64(image.text);
     }
 
     public void ActivateFieldsDeactivateButtons()
@@ -75,6 +76,11 @@ public class CardSaverScript : MonoBehaviour
         newCardFields.SetActive(toggleFields);
         nextButton.SetActive(!toggleFields);
         prevButton.SetActive(!toggleFields);
+        if (!toggleFields)
+        {
+            GetComponent<ScrollScript>().GenerateItemList(GetComponent<CardLoaderScript>().getCardList());
+        }
+
     }
 
     private void SaveCard(CardScript card)
@@ -85,7 +91,7 @@ public class CardSaverScript : MonoBehaviour
         loadScript.AddToCardList(card);
         String jsonString = JsonUtility.ToJson(loadScript.getCardArray());
         FileStream file;
-        if (!File.Exists(DefaultCardValues.DECK_PATH + DefaultCardValues.DECK_EXTENSION))
+        if (!File.Exists(fullPathWithExt))
         {
             if (!Directory.Exists(Application.persistentDataPath + DefaultCardValues.JSON_DIR))
             {
@@ -96,7 +102,7 @@ public class CardSaverScript : MonoBehaviour
         }
         else
         {
-            file = File.Open(Application.persistentDataPath, FileMode.Open);
+            file = File.Open(fullPathWithExt, FileMode.Open);
         }
 
         bf.Serialize(file, jsonString);

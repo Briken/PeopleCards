@@ -43,8 +43,7 @@ public class CardLoaderScript : MonoBehaviour
             Debug.Log(card.card_name);
             cards.Add(card);
         }
-
-        displayScript.DisplayNewCard(cards[0]);
+        GetComponent<ScrollScript>().GenerateItemList(cards);
     }
 
     public List<CardScript> getCardList()

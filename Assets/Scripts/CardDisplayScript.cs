@@ -29,10 +29,14 @@ public class CardDisplayScript : MonoBehaviour
     
     public Sprite ConvertImageFromString(string b64image)
     {
+        try{
         byte[] imageBytes = Convert.FromBase64String(b64image);
         Texture2D tex = new Texture2D(2, 2);
         tex.LoadImage( imageBytes );
         return Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+        } catch(Exception e){
+            return Sprite.Create(new Texture2D(2,2), new Rect(0.0f, 0.0f, 0.0f, 0.0f), new Vector2(0.5f, 0.5f), 100.0f);
+        }
     }
 
     public void DisplayNewCard(CardScript card)
